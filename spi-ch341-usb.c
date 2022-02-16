@@ -65,7 +65,8 @@
   */
 #define CH341_POLL_PERIOD_MS        10    // see above
 
-#define CH341_GPIO_NUM_PINS         5     // Number of GPIO pins, DO NOT CHANGE
+//#define CH341_GPIO_NUM_PINS         5     // Number of GPIO pins, DO NOT CHANGE
+#define CH341_GPIO_NUM_PINS         3     // Number of GPIO pins, I'm feeling brave!
 
 #define CH341_USB_MAX_BULK_SIZE     32    // CH341A wMaxPacketSize for ep_02 and ep_82
 #define CH341_USB_MAX_INTR_SIZE     8     // CH341A wMaxPacketSize for ep_81
@@ -118,12 +119,38 @@ struct ch341_pin_config {
  
 struct ch341_pin_config ch341_board_config[CH341_GPIO_NUM_PINS] = 
 {
-    // pin  GPIO mode           GPIO name   hwirq
-    {   15, CH341_PIN_MODE_CS , "cs0"     , 0 }, // used as CS0
-    {   16, CH341_PIN_MODE_CS , "cs1"     , 0 }, // used as CS1
-    {   17, CH341_PIN_MODE_CS , "cs2"     , 0 }, // used as CS2
-    {   19, CH341_PIN_MODE_IN , "gpio4"   , 1 }, // used as input with hardware IRQ
-    {   21, CH341_PIN_MODE_IN , "gpio5"   , 0 }  // used as input
+    // bitnum  GPIO mode           GPIO name   hwirq
+    //{   5, CH341_PIN_MODE_IN , "DIO3"   , 0 }, // ERR# - DIO3 - DIO3
+    //{   6, CH341_PIN_MODE_IN , "DIO2"   , 0 }, // PEMP - DIO2 - DIO2
+    //{   7, CH341_PIN_MODE_IN , "DIO1"     , 0 }, // ACK# - DIO1 - DIO1
+    {   8, CH341_PIN_MODE_IN , "dio_busy"      , 0 }, // SLCT - DIO5 - BUSY - BUSY
+    {   15, CH341_PIN_MODE_CS , "cs0"      , 0 }, // D0 - CS0 - NSS - NSS  ?? is this right?
+    {   26, CH341_PIN_MODE_OUT , "dio_reset" , 0 } // INT# - RST# - RESET - POR
+
+    // Other reserved and not connected pins for reference.
+    //    1 RESERVED (GND)  ACT#
+    //    2 RESERVED (VCC_3v3)  RSTI
+    //    3 NOT CONNECTED  (SIN#)
+    //    4 NOT CONNECTED  (AFD#)
+    //    9 RESERVED (V3)
+    //    10 RESERVED (UD+)
+    //    11 RESERVED (UD-)
+    //    12 RESERVED (GND)
+    //    13 RESERVED (XI)
+    //    14 RESERVED (XO)
+    //    15 NOT CONNECTED (CS1)
+    //    16 NOT CONNECTED (CS2)
+    //{   18 RESERVED "SCK"  - /dev/spi0.0
+    //{   19 NOT CONNECTED (D4)
+    //{   20 RESERVED "MOSI" - /dev/spi0.0
+    //{   21 NOT CONNECTED (D6)
+    //{   22 RESERVED "MISO" - /dev/spi0.0
+    //   23 NOT CONNECTED (SDA)
+    //   24 NOT CONNECTED (SCL)
+    //   25 NOT CONNECTED (STB#)
+    //   27 NOT CONNECTED (BUSY)
+    //   28 RESERVED (VCC)  VCC_3v3
+    //   29 RESERVED (GND)
 };
 
 static struct spi_board_info ch341_spi_devices[CH341_SPI_MAX_NUM_DEVICES];
@@ -218,18 +245,19 @@ static int ch341_cfg_probe (struct ch341_device* ch341_dev)
         // --- check correct pin configuration ------------
             
         // is pin configurable at all
-        if (cfg->pin < 15 || (cfg->pin > 17 && cfg->pin != 19 && cfg->pin != 21))
+        if (cfg->pin < 23 && (cfg->pin > 17 && cfg->pin != 19 && cfg->pin != 21))
         {
             DEV_ERR(CH341_IF_ADDR, "pin %d: is not configurable", cfg->pin);
             return -EINVAL;
         }
 
+/*      NOT NEEDED PIN 21 IS NOT CONNECTED.
         // is pin configured correctly as input in case of pin 21
         else if (cfg->pin == 21 && cfg->mode != CH341_PIN_MODE_IN)
         {
             DEV_ERR(CH341_IF_ADDR, "pin 21: must be an input");
             return -EINVAL;
-        }
+        } */
 
         // is pin configurable as CS signal
         else if (cfg->pin > 17 && cfg->mode == CH341_PIN_MODE_CS)
