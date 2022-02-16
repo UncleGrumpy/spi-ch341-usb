@@ -120,36 +120,36 @@ struct ch341_pin_config {
 struct ch341_pin_config ch341_board_config[CH341_GPIO_NUM_PINS] = 
 {
     // bitnum  GPIO mode           GPIO name   hwirq
-    //{   5, CH341_PIN_MODE_IN , "DIO3"   , 0 }, // ERR# - DIO3 - DIO3
-    //{   6, CH341_PIN_MODE_IN , "DIO2"   , 0 }, // PEMP - DIO2 - DIO2
-    //{   7, CH341_PIN_MODE_IN , "DIO1"     , 0 }, // ACK# - DIO1 - DIO1
-    {   8, CH341_PIN_MODE_IN , "dio_busy"      , 0 }, // SLCT - DIO5 - BUSY - BUSY
-    {   15, CH341_PIN_MODE_CS , "cs0"      , 0 }, // D0 - CS0 - NSS - NSS  ?? is this right?
-    {   26, CH341_PIN_MODE_OUT , "dio_reset" , 0 } // INT# - RST# - RESET - POR
+    //{   5, CH341_PIN_MODE_IN , "DIO3"      , 0 }, // ERR# - DIO3 - DIO3
+    //{   6, CH341_PIN_MODE_IN , "DIO2"      , 0 }, // PEMP - DIO2 - DIO2
+    //{   7, CH341_PIN_MODE_IN , "DIO1"      , 0 }, // ACK# - DIO1 - DIO1
+    {    8, CH341_PIN_MODE_IN ,  "dio_busy"  , 0 }, // SLCT - DIO5 - BUSY - BUSY
+    {   15, CH341_PIN_MODE_CS ,  "cs0"       , 0 }, // D0 - CS0 - NSS - NSS  ?? is this right?
+    {   26, CH341_PIN_MODE_OUT , "dio_reset" , 0 }  // INT# - RST# - RESET - POR
 
     // Other reserved and not connected pins for reference.
     //    1 RESERVED (GND)  ACT#
-    //    2 RESERVED (VCC_3v3)  RSTI
-    //    3 NOT CONNECTED  (SIN#)
-    //    4 NOT CONNECTED  (AFD#)
+    //    2 RESERVED (VCC_3v3) RSTI - Reset CH341
+    //    3 NOT CONNECTED (SIN#)
+    //    4 NOT CONNECTED (AFD#)
     //    9 RESERVED (V3)
-    //    10 RESERVED (UD+)
-    //    11 RESERVED (UD-)
-    //    12 RESERVED (GND)
-    //    13 RESERVED (XI)
-    //    14 RESERVED (XO)
-    //    15 NOT CONNECTED (CS1)
-    //    16 NOT CONNECTED (CS2)
-    //{   18 RESERVED "SCK"  - /dev/spi0.0
-    //{   19 NOT CONNECTED (D4)
-    //{   20 RESERVED "MOSI" - /dev/spi0.0
-    //{   21 NOT CONNECTED (D6)
-    //{   22 RESERVED "MISO" - /dev/spi0.0
+    //   10 RESERVED (UD+)
+    //   11 RESERVED (UD-)
+    //   12 RESERVED (GND)
+    //   13 RESERVED (XI)
+    //   14 RESERVED (XO)
+    //   16 RESERVED (TP1D1)  -  ??
+    //   17 RESERVED (TP2D2)  -  ??
+    //   18 RESERVED ("SCK")  - /dev/spiX.X
+    //   19 NOT CONNECTED (D4)
+    //   20 RESERVED ("MOSI") - /dev/spiX.X
+    //   21 NOT CONNECTED (D6)
+    //   22 RESERVED ("MISO") - /dev/spiX.X
     //   23 NOT CONNECTED (SDA)
     //   24 NOT CONNECTED (SCL)
     //   25 NOT CONNECTED (STB#)
     //   27 NOT CONNECTED (BUSY)
-    //   28 RESERVED (VCC)  VCC_3v3
+    //   28 RESERVED (VCC) - VCC_3v3 - Input Voltage
     //   29 RESERVED (GND)
 };
 
