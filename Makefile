@@ -31,10 +31,12 @@ ifeq ($(DKMS),)  # if DKMS is not installed
 install: $(MODULE_NAME).ko
 	cp $(MODULE_NAME).ko $(MODULE_DIR)/kernel/drivers/spi
 	depmod
+    cp udev/90-$(MODULE_NAME).rules /etc/udev/rules.d/
 	
 uninstall:
 	rm -f $(MODULE_DIR)/kernel/drivers/spi/$(MODULE_NAME).ko
 	depmod
+    rm -f /etc/udev/rules.d/$(MODULE_NAME).rules
 
 else  # if DKMS is installed
 
