@@ -66,7 +66,7 @@
 #define CH341_POLL_PERIOD_MS        10    // see above
 
 //#define CH341_GPIO_NUM_PINS         5     // Number of GPIO pins, DO NOT CHANGE
-#define CH341_GPIO_NUM_PINS         3     // Number of GPIO pins, I'm feeling brave!
+#define CH341_GPIO_NUM_PINS         4     // Number of GPIO pins, I'm feeling brave!
 
 #define CH341_USB_MAX_BULK_SIZE     32    // CH341A wMaxPacketSize for ep_02 and ep_82
 #define CH341_USB_MAX_INTR_SIZE     8     // CH341A wMaxPacketSize for ep_81

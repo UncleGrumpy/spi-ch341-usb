@@ -60,6 +60,17 @@ The default configuration in this branch is shown in the chart below.
 - Pin 21 (D6/IN2) can only be configured as input. It's direction can't be changed during runtime.
 - One of the inputs can be configured to generate **hardware interrupts for rising edges** of signals. For that purpose, the pin has to be connected with the CH341A **INT** pin 7.  (This is the pin our SX126x IRQ (SX1262 DIO1) is connected to...)
 
+If the included udev rules are loaded and libgpiod is installed the gpio pins can be listed by the folowing command:
+
+ $ gpioinfo gpio_pinedio
+
+The output should look similar to:
+ gpiochip1 - 3 lines:
+         line   0:    "dio_irq"       unused   input  active-high
+         line   1:   "dio_busy"       unused   input  active-high
+         line   2:  "dio_reset"       unused  output  active-high
+
+The gpiochip# might be different.  This is why the symlink to gpio_pinedio is used, it is a stable name on any system.  The number and order of gpiochip devices can vary from one device to the next or even on the same device depending on the order that devices are initalized.
 
 ## Installation of the driver
 
