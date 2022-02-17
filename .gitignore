@@ -4,8 +4,10 @@
 *.swp
 *.symvers
 *.mod.c
+*.mod
 *.o
 *.order
 *.ko
 .temp_versions/
 *.cmd
+tags
