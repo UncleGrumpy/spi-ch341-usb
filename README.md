@@ -47,12 +47,12 @@ The driver uses following CH341A pins for the SPI interface.
 
 The default configuration in this branch is shown in the chart below. 
 
-| CH341 Pin | CH341A Name | Function   | GPIO Name  | Configured as         |
-| ---------- | ----------- | ---------- | ---------- | --------------------- |
-| 15         | D0          | CS0        | dio_spi_cs | Pinedio SPI CS pin    |
-|  7         | INT#        | IRQ        | dio_irq    | Output, SX1262 IRQ    |
-|  8         | SLCT        | BUSY       | dio_busy   | Input, SX1262 BUSY    |
-| 26         | RST#        | Hard Reset | dio_reset  | Output, SX1262 NRESET |
+| CH341 Pin | CH341A Name | Function   | GPIO Name  | GPIO Configuration | SX1262 connection |
+| --------- | ----------- | ---------- | ---------- | ------------------ | ----------------- |
+| 15        | D0          | CS0        | dio_spi_cs | SPI CS pin         | (none)            |
+|  7        | INT#        | IRQ        | dio_irq    | Output             | DIO1 (IRQ)        |
+|  8        | SLCT        | BUSY       | dio_busy   | Input              | BUSY              |
+| 26        | RST#        | Hard Reset | dio_reset  | Output             | NRESET            |
 
 
 **Please note:** 
