@@ -2,4 +2,6 @@
 
 
 SUBSYSTEM=="gpio", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="gpiochip*", GROUP="gpio", MODE="0660"
-SUBSYSTEM=="spidev", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="spidev*", GROUP="gpio", MODE="0660", RUN{program}="/bin/sh -c 'echo spidev > /sys/class/spi_master/spi0/spi0.0/driver_override; echo spi0.0 > /sys/bus/spi/drivers/spidev/bind'"
+SUBSYSTEM=="spidev", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="spidev*", GROUP="gpio", MODE="0660"
+
+ACTION=="add", SUBSYSTEM=="spi_master", KERNEL=="spi[0-9]*", RUN+="/bin/sh -c '/usr/bin/echo spidev > /sys/class/spi_master/%k/spi0.0/driver_override && /usr/bin/echo spi0.0 > /sys/bus/spi/drivers/spidev/bind'"
