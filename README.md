@@ -49,7 +49,6 @@ The default configuration in this branch is shown in the chart below.
 
 | CH341 Pin | CH341A Name | Function   | GPIO Name  | GPIO Configuration | SX1262 connection |
 | --------- | ----------- | ---------- | ---------- | ------------------ | ----------------- |
-| 15        | D0          | CS0        | dio_spi_cs | SPI CS pin         | (none)            |
 |  7        | INT#        | IRQ        | dio_irq    | Output             | DIO1 (IRQ)        |
 |  8        | SLCT        | BUSY       | dio_busy   | Input              | BUSY              |
 | 26        | RST#        | Hard Reset | dio_reset  | Output             | NRESET            |
@@ -57,7 +56,6 @@ The default configuration in this branch is shown in the chart below.
 
 **Please note:** 
 - Direction of pins that are configured as input or output can be changed during runtime.
-- Pin 21 (D6/IN2) can only be configured as input. It's direction can't be changed during runtime.
 - One of the inputs can be configured to generate **hardware interrupts for rising edges** of signals. For that purpose, the pin has to be connected with the CH341A **INT** pin 7.  (This is the pin our SX126x IRQ (SX1262 DIO1) is connected to...)
 
 Application developers should use the libgpiod library and the /dev/gpiochip interfaces to communicate with the Pinedio. The old /sys/class/gpio interface has been removed from the kernel in 5.15.  The libgpiod method should work for any kernel back to ~4.5 (can't remember exactly, but quite old kernels are supported.)
