@@ -120,12 +120,12 @@ struct ch341_pin_config {
 struct ch341_pin_config ch341_board_config[CH341_GPIO_NUM_PINS] = 
 {
     // bitnum  GPIO mode           GPIO name   hwirq
-    //{   5, CH341_PIN_MODE_IN , "DIO3"      , 0 }, // ERR# - DIO3 - DIO3
-    //{   6, CH341_PIN_MODE_IN , "DIO2"      , 0 }, // PEMP - DIO2 - DIO2
-    //{   7, CH341_PIN_MODE_IN , "DIO1"      , 0 }, // ACK# - DIO1 - DIO1
-    {    8, CH341_PIN_MODE_IN ,  "dio_busy"  , 0 }, // SLCT - DIO5 - BUSY - BUSY
-    {   15, CH341_PIN_MODE_CS ,  "cs0"       , 0 }, // D0 - CS0 - NSS - NSS  ?? is this right?
-    {   26, CH341_PIN_MODE_OUT , "dio_reset" , 0 }  // INT# - RST# - RESET - POR
+    //{   5, CH341_PIN_MODE_IN , "DIO3"       , 0 }, // ERR# - DIO3 - DIO3
+    //{   6, CH341_PIN_MODE_IN , "DIO2"       , 0 }, // PEMP - DIO2 - DIO2
+    {    7, CH341_PIN_MODE_IN  , "dio_irq"    , 0 }, // ACK# - DIO1 - DIO1
+    {    8, CH341_PIN_MODE_IN  , "dio_busy"   , 0 }, // SLCT - DIO5 - BUSY - BUSY
+    {   15, CH341_PIN_MODE_CS  , "dio_spi_cs" , 0 }, // D0 - CS0 - NSS - NSS  ?? is this right?
+    {   26, CH341_PIN_MODE_OUT , "dio_reset"  , 0 }  // INT# - RST# - RESET - POR
 
     // Other reserved and not connected pins for reference.
     //    1 RESERVED (GND)  ACT#

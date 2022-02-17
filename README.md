@@ -41,28 +41,24 @@ The driver uses following CH341A pins for the SPI interface.
 | 20 | D5 | output | MOSI (DOUT)|
 | 22 | D7 | input | MISO (DIN) |
 | 15 | D0 | output | CS0 |
-| 16 | D1 | output | CS1 |
-| 17 | D2 | output | CS2 |
 
-With these three CS signals, three slaves can be used at maximum at the interface.
 
 ## GPIO configuration
 
-Five of the data pins can be configured as GPIO pins if they are not used for the SPI interface or as chip select signals:
+The default configuration in this branch is shown in the chart below. 
 
-| Pin | Name | SPI Function (default) | Configurable as (**CH341 default in bold face**)   |
-| --- | ---- | ---------------------- | ------------------ |
-| 15  | D0   | CS0                    | Input, Output, **CS**  |
-| 16  | D1   | CS1                    | Input, Output, **CS**  |
-| 17  | D2   | CS2                    | Input, Output, **CS**  |
-| 19  | D4   | OUT2                   | Input, **Output**      |
-| 21  | D6   | IN2                    | **Input**              |
+| SX126x Pin | CH341A Name | Function   | GPIO Name  | Configured as         |
+| ---------- | ----------- | ---------- | ---------- | --------------------- |
+| 15         | D0          | CS0        | dio_spi_cs | Pinedio SPI CS pin    |
+|  7         | INT#        | IRQ        | dio_irq    | Output, SX1262 IRQ    |
+|  8         | SLCT        | BUSY       | dio_busy   | Input, SX1262 BUSY    |
+| 26         | RST#        | Hard Reset | dio_reset  | Output, SX1262 NRESET |
+
 
 **Please note:** 
 - Direction of pins that are configured as input or output can be changed during runtime.
 - Pin 21 (D6/IN2) can only be configured as input. It's direction can't be changed during runtime.
-- At least one of the CS data pins D0...D2 has to be configured as CS signal.
-- One of the inputs can be configured to generate **hardware interrupts for rising edges** of signals. For that purpose, the pin has to be connected with the CH341A **INT** pin 7. 
+- One of the inputs can be configured to generate **hardware interrupts for rising edges** of signals. For that purpose, the pin has to be connected with the CH341A **INT** pin 7.  (This is the pin our SX126x IRQ (SX1262 DIO1) is connected to...)
 
 
 ## Installation of the driver
