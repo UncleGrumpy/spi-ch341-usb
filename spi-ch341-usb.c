@@ -1159,7 +1159,7 @@ static int ch341_gpio_probe (struct ch341_device* ch341_dev)
     
     DEV_DBG (CH341_IF_ADDR, "start");
 
-    gpio->label     = "ch341";
+    gpio->label     = "pinedio";
 
     #if LINUX_VERSION_CODE >= KERNEL_VERSION(4,5,0)
     gpio->parent = &ch341_dev->usb_dev->dev;

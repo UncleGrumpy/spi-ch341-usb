@@ -37,10 +37,10 @@ The driver uses following CH341A pins for the SPI interface.
 
 | Pin | Name | Direction | Function SPI (CH341A) |
 | --- | ---- | --------- | --------------------- |
-| 18 | D3 | output | SCK (DCK) |
-| 20 | D5 | output | MOSI (DOUT)|
-| 22 | D7 | input | MISO (DIN) |
-| 15 | D0 | output | CS0 |
+| 18  | D3   | output    | SCK (DCK)             |
+| 20  | D5   | output    | MOSI (DOUT)           |
+| 22  | D7   | input     | MISO (DIN)            |
+| 15  | D0   | output    | CS0                   |
 
 
 ## GPIO configuration
@@ -60,9 +60,11 @@ The default configuration in this branch is shown in the chart below.
 - Pin 21 (D6/IN2) can only be configured as input. It's direction can't be changed during runtime.
 - One of the inputs can be configured to generate **hardware interrupts for rising edges** of signals. For that purpose, the pin has to be connected with the CH341A **INT** pin 7.  (This is the pin our SX126x IRQ (SX1262 DIO1) is connected to...)
 
-If the included udev rules are loaded and libgpiod is installed the gpio pins can be listed by the folowing command:
+Application developers should use the libgpiod library and the /dev/gpiochip interfaces to communicate with the Pinedio. The old /sys/class/gpio interface has been removed from the kernel in 5.15.  The libgpiod method should work for any kernel back to ~4.5 (can't remember exactly, but quite old kernels are supported.)
 
- $ gpioinfo gpio_pinedio
+With libgpiod installed the gpio pins can be listed by the folowing command:
+
+ $ gpioinfo pinedio
 
 The output should look similar to:
  gpiochip1 - 3 lines:
@@ -70,7 +72,7 @@ The output should look similar to:
          line   1:   "dio_busy"       unused   input  active-high
          line   2:  "dio_reset"       unused  output  active-high
 
-The gpiochip# might be different.  This is why the symlink to gpio_pinedio is used, it is a stable name on any system.  The number and order of gpiochip devices can vary from one device to the next or even on the same device depending on the order that devices are initalized.
+The gpiochip# might be different.  The driver exposes the Pinedio with the gpio name "pinedio", developers should use this name to interact with the gpio pins because the gpiochip# of the device is likely to be different from one system to the next, or depending on the order devices are initalized.
 
 ## Installation of the driver
 
