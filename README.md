@@ -91,7 +91,7 @@ on Debian based systems.
 The driver can be compiled with following commands:
 
 ```
-git clone https://github.com/gschorcht/spi-ch341-usb.git
+git clone -b pinedio https://github.com/UncleGrumpy/spi-ch341-usb.git
 cd spi-ch341-usb
 make
 
