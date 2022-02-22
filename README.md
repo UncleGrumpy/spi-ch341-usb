@@ -45,7 +45,7 @@ The driver uses following CH341A pins for the SPI interface.
 
 ## GPIO configuration
 
-The default configuration in this branch is shown in the chart below and polls the inputs with a default rate of 100 Hz and 10 ms period (this can be raised to as high as 100ms in the source code to lower cpu usage.) The direction of GPIO pins configured as inputs or outputs can be changed during runtime.
+The default configuration in this branch is shown in the chart below and polls the inputs with a default rate of 100 Hz and 10 ms period. This can be raised to as high as 100ms to lower cpu usage.  The default can be changed in the source code or when the driver is loaded, for more information on this see [GPIO polling rate](README.md#gpio-polling-rate) below. The direction of GPIO pins configured as inputs or outputs can be changed during runtime.
 
 #### GPIO Pin default configuration
 
