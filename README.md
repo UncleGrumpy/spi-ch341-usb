@@ -45,7 +45,10 @@ The driver uses following CH341A pins for the SPI interface.
 
 ## GPIO configuration
 
-The default configuration in this branch is shown in the chart below. 
+The default configuration in this branch is shown in the chart below and polls the inputs with a default rate of 100 Hz and 10 ms period (this can be raised to as high as 100ms in the source code to lower cpu usage.) The direction of GPIO pins configured as inputs or outputs can be changed during runtime.
+
+#### GPIO Pin default configuration
+
 
 | CH341 Pin | CH341A Name | Function   | GPIO Line # | GPIO Name  | GPIO Configuration | SX1262 connection |
 | --------- | ----------- | ---------- | ----------- | ---------- | ------------------ | ----------------- |
@@ -60,16 +63,19 @@ The default configuration in this branch is shown in the chart below.
 
 Application developers should use the libgpiod library and the /dev/gpiochip interfaces to communicate with the Pinedio. The old /sys/class/gpio interface has been removed from the kernel in 5.15.  The libgpiod method should work for any kernel back to ~4.5 (can't remember exactly, but quite old kernels are supported.)
 
+#### GPIO Pin Usage
+
 With libgpiod installed the gpio pins can be listed by the folowing command:
-
+```
  $ gpioinfo pinedio
-
+```
 The output should look similar to:
+```
  gpiochip1 - 3 lines:
          line   0:    "dio_irq"       unused   input  active-high
          line   1:   "dio_busy"       unused   input  active-high
          line   2:  "dio_reset"       unused  output  active-high
-
+```
 The gpiochip# might be different.  The driver exposes the Pinedio with the gpio name "pinedio", developers should use this name to interact with the gpio pins because the gpiochip# of the device is likely to be different from one system to the next, or depending on the order devices are initalized.
 
 ## Installation of the driver
@@ -80,11 +86,17 @@ To compile the driver, you must have installed current **kernel header files**.
 
 Even though it is not mandatory, it is highly recommended to use **DKMS** (dynamic kernel module support) for the installation of the driver. DKMS allows to manage kernel modules whose sources reside outside the kernel source tree. Such modules are then automatically rebuilt when a new kernel version is installed.
 
-To use DKMS, it has to be installed before, e.g., with command
+To use DKMS, it has to be installed before,
+
+ On Ubuntu/Debian based systems:
+
 ```
 sudo apt-get install dkms
 ```
-on Debian based systems.
+ On Manjaro/Archlinux based systems:
+```
+sudo pacman -Syu dkms
+```
 
 #### Installaton
 
@@ -134,21 +146,7 @@ rmmod spi-ch341-usb
 
 before you can load the driver module for the I2C interface.
 
-## Configuration of the driver
-
-Per default, the driver configures the GPIOs as following and polls the inputs with a default rate of 100 Hz and 10 ms period, respectively.
-
-| Pin | SPI Function | GPIO function | GPIO name | IRQ      |
-| --- | ------------ | --------------|---------- | ---------|
-| 15  | CS0          | -             | -         | -        |
-| 16  | CS1          | -             | -         | -        |
-| 17  | CS2          | -             | -         | -        |
-| 19  | -            | Input         | gpio4     | hardware |
-| 21  | -            | Input         | gpio5     | software |
-
-GPIO configuration as well their polling rate can be changed according to your requirements. The direction of GPIO pins configured as inputs or outputs can be changed during runtime.
-
-### GPIO configuration
+#### GPIO Pin configuration
 
 To change **GPIO configuration**, simply change the variable ```ch341_board_config``` that should be self-explaining. This variable contains structured entries for each configurable pin. Each entry consists of the pin number, the GPIO mode used for the pin, the name used for the GPIO in the Linux host and a flag whether the pin is connected with the CH341A hardware interrupt pin **INT**. Default configuration is:
 
@@ -187,7 +185,7 @@ struct ch341_pin_config ch341_board_config[CH341_GPIO_NUM_PINS] =
 - The signal at the input pin that is configured to generate hardware interrupts (```hwirq``` set to 1) **MUST** also be connected to the CH341A **INT** pin 7.
 - If ther is no input should generate hardware interrupts, set ```hwirq``` to 0 for all entries.
 
-### GPIO polling rate
+#### GPIO polling rate
 
 GPIO inputs are polled periodically by a separate kernel thread. GPIO polling rate defines the **rate at which the kernel thread reads GPIO inputs** and determines whether to generate **software interrupts**. That is, it defines the maximum rate at which changes at GPIO inputs can be recognized and software interrupts can be generated. 
 
