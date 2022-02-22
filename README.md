@@ -1,4 +1,5 @@
 # CH341A USB to SPI and GPIO Linux kernel driver
+[![flawfinder](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml) [![CodeQL](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml)
 
 The driver can be used with CH341A USB to UART/I2C/SPI adapter boards to connect SPI slaves to a Linux host. It uses either the **fast SPI hardware interface** which is, however, limited to SPI mode 0 **or** a **slow SPI bit banging implementation**.
 
