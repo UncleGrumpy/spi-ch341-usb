@@ -268,7 +268,21 @@ int status = ioctl (spi, SPI_IOC_MESSAGE(1), &spi_trans);
 
 ### Using GPIOs
 
-On systems with GPIO character device support (CONFIG_GPIO_CDEV) GPIO pins are available via ```/dev/gpiochipN``` character device.
+On systems with GPIO character device support (CONFIG_GPIO_CDEV) GPIO pins are available via ```/dev/gpiochipN``` character device through the libgpiod API.
+
+#### Libgpiod Library API
+
+The C API allows calling the gpiod library from C or languages that support C APIs like C++. The API is well documented, and too extensive to fully cover here. The basic use cases usually follows these steps:
+
+* Open the desired GPIO chip by calling one of the gpiod_chip_open functions such as gpiod_chip_open_by_name(). This returns a gpiod_chip struct which is used by subsequent API calls.
+* Open the desired GPIO line(s) by calling gpiod_chip_get_line() or gpiod_chip_get_lines(), obtaining a gpiod_line struct.
+* Request use of the line as an input or output by calling gpiod_line_request_input() or gpiod_line_request_output().
+* Read the value of an input by calling gpiod_line_get_value() or set the level of an output by calling gpiod_line_set_value().
+* When done, release the lines by calling gpiod_line_release() and chips by calling gpiod_chip_close().
+
+Other APIs are provided for more advanced functions like setting pin modes for pullup or pulldown resistors or defining a callback function to be called when an event occurs, like the level of an input pin changing.
+
+#### Old /sys/class/gpio interface
 
 On systems with GPIO sysfs interface enabled (CONFIG_GPIO_SYSFS) to access GPIOs from user space, ```sysfs``` can be used . For each configured GPIO, a directory 
 ```
@@ -282,7 +296,7 @@ is created by the system, where ```<gpio>``` is the name of the GPIO as defined 
 
 **Please note:** For read and write operations from and/or to these files, the user requires read and/or write permissions, respectively.
 
-#### Open a GPIO
+##### Open a GPIO
 
 Before a GPIO can be used, file ```value``` has to be opened
 
@@ -297,7 +311,7 @@ if ((fd = open("/sys/class/gpio/<gpio>/value", O_RDWR)) == -1)
 ```
 where ```<gpio>``` is again the name of the GPIO.
 
-#### Write GPIO output
+##### Write GPIO output
 
 Once the file ```value``` is opened, you can use standard I/O functions to read and write. To write a GPIO value, simply use function ```write``` as following. The value is written to the GPIO out immediately.
 
@@ -309,7 +323,7 @@ if (write(fd, value ? "1" : "0", 1) == -1)
 }
 ```
 
-#### Read GPIO input
+##### Read GPIO input
 
 To read values from GPIOs immediately, you can simply use function ```read``` as following:
 
@@ -332,7 +346,7 @@ if (lseek(fd, 0, SEEK_SET) == -1) {
 }
 ```
 
-#### Reacting on GPIO input interrupt
+##### Reacting on GPIO input interrupt
 
 Function ```poll``` can be used before function ```read``` to react and read values from the GPIO only on interrupts.
 
@@ -371,7 +385,7 @@ Even though the driver defines software interrupts for GPIO inputs as well as GP
 
 Full examples for GPIO output and interrupt input can be found in the driver's directory.
 
-#### Change the GPIO direction
+##### Change the GPIO direction
 
 To change the direction of a GPIO pin configured as input or output, simply write as ```root``` keyword ```in``` or keyword ```out``` to the file ```direction```, e.g.
 
