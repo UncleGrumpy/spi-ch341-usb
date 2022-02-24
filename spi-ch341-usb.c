@@ -119,7 +119,7 @@ struct ch341_pin_config {
  
 struct ch341_pin_config ch341_board_config[CH341_GPIO_NUM_PINS] = 
 {
-    // bitnum  GPIO mode           GPIO name   hwirq
+    // pin  GPIO mode           GPIO name   hwirq    // Connections from pinedio schematic
     //{   5, CH341_PIN_MODE_IN , "DIO3"       , 0 }, // ERR# - DIO3 - DIO3
     //{   6, CH341_PIN_MODE_IN , "DIO2"       , 0 }, // PEMP - DIO2 - DIO2
     {    7, CH341_PIN_MODE_IN  , "dio_irq"    , 0 }, // ACK# - DIO1 - DIO1
