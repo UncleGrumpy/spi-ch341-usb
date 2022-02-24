@@ -1,7 +1,7 @@
 #CH341 SPI USB adapter
 
 
-SUBSYSTEM=="gpio", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="gpiochip*", GROUP="gpio", MODE="0660"
+SUBSYSTEM=="gpio", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="gpiochip*", GROUP="gpio", MODE="0660", SYMLINK="pinedio"
 SUBSYSTEM=="spidev", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", KERNEL=="spidev*", GROUP="gpio", MODE="0660"
 
 ACTION=="add", SUBSYSTEM=="spi_master", KERNEL=="spi[0-9]*", RUN+="/bin/sh -c '/usr/bin/echo spidev > /sys/class/spi_master/%k/%k.0/driver_override && /usr/bin/echo %k.0 > /sys/bus/spi/drivers/spidev/bind'"
