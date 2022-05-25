@@ -1,7 +1,9 @@
 # CH341A USB to SPI and GPIO Linux kernel driver
+> This fork was created for the purposes of creating a driver specifally for the pinedio-usb LoRa dongle.
+
 [![flawfinder](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml) [![CodeQL](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml)
 
-The driver can be used with CH341A USB to UART/I2C/SPI adapter boards to connect SPI slaves to a Linux host. It uses either the **fast SPI hardware interface** which is, however, limited to SPI mode 0 **or** a **slow SPI bit banging implementation**.
+The driver can be used with CH341A USB to UART/I2C/SPI adapter boards to connect SPI slaves to a Linux host. The It uses either the **fast SPI hardware interface** which is, however, limited to SPI mode 0 **or** a **slow SPI bit banging implementation**.
 
 Additionally, CH341A data pins that are not used for the SPI interface can be configured as **GPIO** pins. The driver can generate **software interrupts** for all input pins. **One input** pin can be connected with the CH341A interrupt pin to generate **hardware interrupts**. However, since USB is an asynchronous communication system, it is not possible to guarantee exact timings for GPIOs and interrupts.
 
@@ -376,20 +378,4 @@ where ```<gpio>``` is again the name of the GPIO and ```<type>``` is the type of
 - ```falling``` for interrupts on falling signal edges, and
 - ```both``` for interrupts on rising as well as falling signal edges.
 
-For example, following command would activate interrupts for rising edges of the signal connected to ```gpio4```. The command has to be executed as real ```root```, using ```sudo``` command doesn't work.
-
-```
-echo rising > /sys/class/gpio/gpio4/edge
-```
-
-Even though the driver defines software interrupts for GPIO inputs as well as GPIO outputs, they can be activated only for GPIO inputs.
-
-Full examples for GPIO output and interrupt input can be found in the driver's directory.
-
-##### Change the GPIO direction
-
-To change the direction of a GPIO pin configured as input or output, simply write as ```root``` keyword ```in``` or keyword ```out``` to the file ```direction```, e.g.
-
-```
-echo out > /sys/class/gpio/gpio4/direction
-```
+For example, following command would activate interrupts for rising edges of the signal connected to ```gpio4```. The command has to be executed as real ```root```, using ```sudo``` command doesn't 
