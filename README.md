@@ -1,5 +1,5 @@
 # CH341A USB to SPI and GPIO Linux kernel driver
-> This fork was created for the purposes of creating a driver specifally for the pinedio-usb LoRa dongle.
+> This fork was created for the purposes of creating a driver specifally for the pinedio-usb LoRa dongle. The `pinedio` branch contains the current state of that work. `master` follows the [dimich-dmb/spi-ch341-usb](https://github.com/dimich-dmb/spi-ch341-usb) fork of the [upstream gschorcht repo](https://github.com/gschorcht/spi-ch341-usb/spi-ch341-usb), because the gschorcht repo will not work on kernels newer than 5.4.
 
 [![flawfinder](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/flawfinder-analysis.yml) [![CodeQL](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml/badge.svg?branch=pinedio)](https://github.com/UncleGrumpy/spi-ch341-usb/actions/workflows/codeql-analysis.yml)
 
