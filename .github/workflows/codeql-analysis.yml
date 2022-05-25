@@ -13,10 +13,14 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ pinedio ]
+    branches:
+    - pinedio
+    - jf002
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ pinedio ]
+    branches:
+    - pinedio
+    - jf002
   schedule:
     - cron: '05 14 * * 0'
 
