@@ -48,6 +48,7 @@
 #include <linux/usb.h>
 #include <linux/spi/spi.h>
 #include <linux/gpio.h>
+#include <linux/gpio/driver.h>
 #include <linux/irq.h>
 
 /** 
